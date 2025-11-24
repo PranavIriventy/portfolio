@@ -5,219 +5,816 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio | PRANAV MOHIT IRIVENTY</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      background-color: #f9f9f9;
-      color: #333;
-      line-height: 1.6;
+    :root {
+      --bg: #020617;
+      --bg-alt: rgba(15, 23, 42, 0.8);
+      --card-bg: rgba(15, 23, 42, 0.9);
+      --primary: #38bdf8;
+      --primary-soft: rgba(56, 189, 248, 0.3);
+      --accent: #a855f7;
+      --accent-soft: rgba(168, 85, 247, 0.35);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border-radius: 16px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.7);
     }
+
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top left, #0f172a 0, #020617 45%, #000 100%);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* BACKGROUND GLOW ELEMENTS */
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      pointer-events: none;
+      z-index: -1;
+      border-radius: 999px;
+      filter: blur(60px);
+      opacity: 0.35;
+    }
+
+    body::before {
+      width: 420px;
+      height: 420px;
+      top: -120px;
+      right: -80px;
+      background: radial-gradient(circle, var(--accent-soft), transparent 65%);
+    }
+
+    body::after {
+      width: 420px;
+      height: 420px;
+      bottom: -120px;
+      left: -80px;
+      background: radial-gradient(circle, var(--primary-soft), transparent 65%);
+    }
+
+    /* HEADER + NAVBAR */
+
     header {
-      background-color: #003366;
-      color: white;
-      padding: 20px 0;
-      text-align: center;
       position: sticky;
       top: 0;
       z-index: 1000;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(
+        to right,
+        rgba(15, 23, 42, 0.9),
+        rgba(15, 23, 42, 0.95)
+      );
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
     }
+
+    .nav-container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #e5e7eb;
+    }
+
+    .logo span {
+      color: var(--primary);
+    }
+
     nav {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
-      background-color: #002244;
-      padding: 10px 0;
+      gap: 16px;
     }
+
     nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      margin: 0 15px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #e5e7eb;
+      position: relative;
+      padding: 4px 0;
+      opacity: 0.85;
+      transition: opacity 0.15s ease-out, transform 0.15s ease-out;
     }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      transition: width 0.18s ease-out;
+      border-radius: 999px;
+    }
+
     nav a:hover {
-      text-decoration: underline;
+      opacity: 1;
+      transform: translateY(-1px);
     }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* MAIN LAYOUT */
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 10px 20px 60px;
+    }
+
     section {
-      padding: 30px;
-      max-width: 1000px;
-      margin: auto;
-      background-color: #fff;
-      margin-top: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      scroll-margin-top: 100px;
+      margin-top: 48px;
     }
-    h2 {
-      color: #003366;
-      border-bottom: 2px solid #003366;
-      padding-bottom: 5px;
+
+    .section-card {
+      background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.95),
+        rgba(15, 23, 42, 0.92)
+      );
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-soft);
+      padding: 26px 24px 28px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      position: relative;
+      overflow: hidden;
     }
+
+    .section-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right,
+        rgba(56, 189, 248, 0.08),
+        transparent 60%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .section-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    h2.section-title {
+      margin: 0 0 18px;
+      font-size: 1.35rem;
+      color: #f9fafb;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    h2.section-title span.accent-bar {
+      display: inline-block;
+      width: 24px;
+      height: 2px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      border-radius: 999px;
+    }
+
     ul {
       padding-left: 20px;
+      margin: 0;
     }
-    .button {
-      display: inline-block;
-      background-color: #003366;
-      color: white;
+
+    li {
+      margin-bottom: 6px;
+      color: var(--text-muted);
+      font-size: 0.93rem;
+    }
+
+    /* HERO SECTION */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.9fr) minmax(0, 1.2fr);
+      gap: 40px;
+      align-items: center;
+      padding: 60px 0 34px;
+    }
+
+    .hero-left {
+      position: relative;
+    }
+
+    .hero-left span.tagline {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .hero-left h1 {
+      margin: 12px 0 8px;
+      font-size: 2.4rem;
+      color: #f9fafb;
+    }
+
+    .hero-left h1 span {
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-role {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .hero-summary {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 22px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
       padding: 10px 20px;
+      font-size: 0.9rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out,
+        background 0.12s ease-out, border-color 0.12s ease-out, color 0.12s;
       text-decoration: none;
-      border-radius: 5px;
-      margin-top: 10px;
+      white-space: nowrap;
     }
-    .button:hover {
-      background-color: #00509e;
+
+    .btn-primary {
+      background: radial-gradient(circle at top left, var(--primary), var(--accent));
+      color: #0b1120;
+      font-weight: 600;
+      box-shadow: 0 14px 35px rgba(15, 118, 178, 0.55);
     }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 45px rgba(59, 130, 246, 0.75);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-main);
+      border-color: rgba(148, 163, 184, 0.6);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.8);
+    }
+
+    .btn-outline:hover {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .hero-tag {
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      color: var(--text-muted);
+    }
+
+    .hero-tag.highlight {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .hero-right {
+      display: flex;
+      justify-content: center;
+    }
+
+    .profile-card {
+      background: radial-gradient(circle at top, #1e293b 0%, #020617 75%);
+      border-radius: 26px;
+      padding: 18px 18px 16px;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.95);
+      max-width: 230px;
+      text-align: center;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.35), transparent 55%);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .profile-inner {
+      position: relative;
+      z-index: 1;
+    }
+
     .profile-pic {
-      display: block;
-      margin: 0 auto 20px;
-      max-width: 150px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
-      border: 4px solid #003366;
+      object-fit: cover;
+      border: 3px solid rgba(241, 245, 249, 0.9);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3);
+      background: #020617;
+      display: block;
+      margin: 0 auto 10px;
+    }
+
+    .profile-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+
+    .profile-role {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* EDUCATION & INTERNSHIPS */
+
+    .two-column {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    .item-block {
+      margin-bottom: 18px;
+    }
+
+    .item-title {
+      font-weight: 600;
+      margin-bottom: 2px;
+      color: #e5e7eb;
+      font-size: 0.98rem;
+    }
+
+    .item-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .item-meta {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+    }
+
+    .pill {
+      display: inline-block;
+      font-size: 0.76rem;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      color: var(--text-muted);
+      margin-top: 5px;
+    }
+
+    /* PROJECTS */
+
+    .project {
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px dashed rgba(51, 65, 85, 0.9);
+    }
+
+    .project:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .project-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #e5e7eb;
+      font-size: 0.98rem;
+    }
+
+    .project-tech {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .project-link a {
+      font-size: 0.82rem;
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    /* ACHIEVEMENTS */
+
+    .achievements-list li {
+      margin-bottom: 8px;
+    }
+
+    /* CONTACT + FOOTER */
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    .contact-item {
+      margin-bottom: 10px;
+      font-size: 0.93rem;
+      color: var(--text-muted);
+    }
+
+    .contact-label {
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      padding: 16px 10px 26px;
+      margin-top: 30px;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 40px;
+      }
+      .hero-right {
+        order: -1;
+      }
+      .two-column {
+        grid-template-columns: 1fr;
+      }
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+      nav {
+        justify-content: flex-end;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      nav {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .hero-left h1 {
+        font-size: 2rem;
+      }
+      main {
+        padding-bottom: 40px;
+      }
     }
   </style>
 </head>
 
 <body>
+  <!-- HEADER -->
   <header>
-    <h1>PRANAV MOHIT IRIVENTY</h1>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#education">Education</a>
-      <a href="#skills">Skills</a>
-      <a href="#internship">Internship</a>
-      <a href="#projects">Projects</a>
-      <a href="#achievements">Achievements</a>
-      <a href="#resume">Resume</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <div class="nav-container">
+      <div class="logo">PRANAV <span>MOHIT</span> IRIVENTY</div>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#education">Education</a>
+        <a href="#skills">Skills</a>
+        <a href="#internships">Internships</a>
+        <a href="#projects">Projects</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
   </header>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <img src="profile.jpg" alt="Profile Picture" class="profile-pic">
-    <h2>About</h2>
-    <p>
-      I am an undergraduate B.Tech student in Electronics &amp; Communication Engineering at
-      Vellore Institute of Technology, Amaravati (CGPA: 8.32). I enjoy building practical,
-      data-driven solutions using Python, SQL, and modern web technologies.
-      I have hands-on experience in full stack development and data analysis projects,
-      and I like working on real-world problems that combine software and engineering thinking.
-    </p>
-  </section>
+  <main>
+    <!-- HERO -->
+    <section id="home" class="hero">
+      <div class="hero-left">
+        <span class="tagline">B.Tech ECE • Full Stack & Data</span>
+        <h1>Hi, I'm <span>Pranav</span>.</h1>
+        <div class="hero-role">Full Stack Developer Intern • Data &amp; Cloud Enthusiast</div>
+        <p class="hero-summary">
+          I’m a B.Tech Electronics &amp; Communication Engineering student from VIT Amaravati,
+          with hands-on experience in full stack development, data analysis, and cloud concepts.
+          I enjoy turning real-world problems into scalable, reliable software solutions.
+        </p>
+        <div class="hero-actions">
+          <a href="resume.pdf" download class="btn btn-primary">
+            Download Resume
+          </a>
+          <a href="#contact" class="btn btn-outline">
+            Contact Me
+          </a>
+        </div>
+        <div class="hero-tags">
+          <span class="hero-tag highlight">Python • Java • SQL</span>
+          <span class="hero-tag">Django &amp; React</span>
+          <span class="hero-tag">Machine Learning</span>
+          <span class="hero-tag">Cloud Computing</span>
+        </div>
+      </div>
 
-  <!-- EDUCATION -->
-  <section id="education">
-    <h2>Education</h2>
-    <ul>
-      <li>
-        <strong>B.Tech – Electronics &amp; Communication Engineering</strong><br />
-        Vellore Institute of Technology, Amaravati (2021–2025)<br />
-        CGPA: 8.32
-      </li>
-      <li>
-        <strong>Higher Secondary (HSC) – Maths, Physics &amp; Chemistry</strong><br />
-        Rao’s Junior College, 2021<br />
-        Percentage: 89.7%
-      </li>
-      <li>
-        <strong>SSC – State Board</strong><br />
-        Kesava Reddy High School, 2019<br />
-        GPA: 9.5
-      </li>
-    </ul>
-  </section>
+      <div class="hero-right">
+        <div class="profile-card">
+          <div class="profile-inner">
+            <!-- Replace profile.jpg with your actual profile image -->
+            <img src="profile.jpg" alt="Profile Picture" class="profile-pic" />
+            <div class="profile-name">PRANAV MOHIT IRIVENTY</div>
+            <div class="profile-role">B.Tech ECE • VIT Amaravati</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <!-- SKILLS -->
-  <section id="skills">
-    <h2>Skills</h2>
-    <ul>
-      <li><strong>Languages:</strong> Python, Java</li>
-      <li><strong>Databases:</strong> SQL (experienced with MySQL)</li>
-      <li><strong>Tools:</strong> PyCharm, VS Code, GitHub</li>
-      <li><strong>Frameworks:</strong> React.js, Django</li>
-      <li><strong>Cloud &amp; AI:</strong> Cloud Computing, Artificial Intelligence, Machine Learning, Deep Learning</li>
-    </ul>
-  </section>
+    <!-- ABOUT -->
+    <section id="about" class="section-card">
+      <div class="section-inner">
+        <h2 class="section-title">
+          <span class="accent-bar"></span> About
+        </h2>
+        <p style="font-size:0.95rem; color:var(--text-muted);">
+          I am an undergraduate B.Tech student in Electronics &amp; Communication Engineering at
+          Vellore Institute of Technology, Amaravati (CGPA: 8.32). I enjoy building practical,
+          data-driven solutions using Python, SQL, and modern web technologies.
+        </p>
+        <p style="font-size:0.95rem; color:var(--text-muted);">
+          I have hands-on experience in full stack development through internships and academic projects,
+          where I contributed to real-world software modules, dashboards, and database systems.
+          My key interests include full stack development, cloud computing, and machine learning, with a focus on
+          writing clean, maintainable code and collaborating in professional engineering environments.
+        </p>
+      </div>
+    </section>
 
-  <!-- INTERNSHIP -->
-  <section id="internship">
-    <h2>Internship</h2>
+    <!-- EDUCATION -->
+    <section id="education" class="section-card">
+      <div class="section-inner">
+        <h2 class="section-title">
+          <span class="accent-bar"></span> Education
+        </h2>
+        <div class="two-column">
+          <div>
+            <div class="item-block">
+              <div class="item-title">
+                B.Tech – Electronics &amp; Communication Engineering
+              </div>
+              <div class="item-subtitle">
+                Vellore Institute of Technology, Amaravati
+              </div>
+              <div class="item-meta">2021 – 2025 • CGPA: 8.32</div>
+            </div>
+          </div>
+          <div>
+            <div class="item-block">
+              <div class="item-title">Higher Secondary (HSC)</div>
+              <div class="item-subtitle">Rao’s Junior College</div>
+              <div class="item-meta">2021 • 89.7%</div>
+            </div>
+            <div class="item-block">
+              <div class="item-title">SSC – State Board</div>
+              <div class="item-subtitle">Kesava Reddy High School</div>
+              <div class="item-meta">2019 • GPA: 9.5</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <h3>Intern – Full Stack Developer • VCodez – Innovating Ideas</h3>
-    <ul>
-      <li>Worked on end-to-end development using Python, Django, React, SQL, and MySQL, contributing to real project modules.</li>
-      <li>Built backend APIs, database schemas, and frontend components while fixing bugs and improving features.</li>
-      <li>Collaborated with senior developers to understand project requirements, improve code quality, and follow proper development workflows.</li>
-    </ul>
-  </section>
+    <!-- SKILLS -->
+    <section id="skills" class="section-card">
+      <div class="section-inner">
+        <h2 class="section-title">
+          <span class="accent-bar"></span> Skills
+        </h2>
+        <ul>
+          <li><strong>Languages:</strong> Python, Java</li>
+          <li><strong>Databases:</strong> SQL, MySQL</li>
+          <li><strong>Frameworks:</strong> React.js, Django</li>
+          <li><strong>Tools &amp; IDEs:</strong> Git, GitHub, VS Code, PyCharm</li>
+          <li><strong>Cloud &amp; AI:</strong> Cloud Computing, Artificial Intelligence, Machine Learning, Deep Learning</li>
+        </ul>
+      </div>
+    </section>
 
-  <!-- PROJECTS -->
-  <section id="projects">
-    <h2>Projects</h2>
+    <!-- INTERNSHIPS -->
+    <section id="internships" class="section-card">
+      <div class="section-inner">
+        <h2 class="section-title">
+          <span class="accent-bar"></span> Internships
+        </h2>
 
-    <h3>Student Performance – Data Analysis</h3>
-    <ul>
-      <li>Analyzed a real dataset using Pandas, NumPy, Matplotlib, and Seaborn to uncover factors influencing student exam scores.</li>
-      <li>Built and evaluated machine learning models (Linear Regression, Random Forest) for performance prediction.</li>
-      <li>Developed a Streamlit dashboard and shared the project on GitHub:
-        <a href="https://github.com/PranavIriventy/Studentproject" target="_blank">
-          github.com/PranavIriventy/Studentproject
-        </a>
-      </li>
-    </ul>
+        <div class="item-block">
+          <div class="item-title">
+            Full Stack Developer Intern • VCodez – Innovating Ideas
+          </div>
+          <div class="item-subtitle">Remote Internship</div>
+          <div class="item-meta">Python • Django • React • SQL • MySQL</div>
+          <ul>
+            <li>Worked on full stack development using Python, Django, React, SQL, and MySQL, contributing to live project modules.</li>
+            <li>Developed backend APIs, designed database schemas, and created frontend components aligned with UI/UX requirements.</li>
+            <li>Fixed bugs, enhanced features, and collaborated with senior developers to follow clean coding and Git workflows.</li>
+          </ul>
+          <span class="pill">Real Project Experience</span>
+        </div>
 
-    <h3>SQL-Based Online Library Management System</h3>
-    <ul>
-      <li>Created a library database in MySQL with tables for books, members, and transactions.</li>
-      <li>Used stored procedures, triggers, and views to handle borrowing, returns, and fine calculation automatically.</li>
-      <li>Published the complete project on GitHub:
-        <a href="https://github.com/PranavIriventy/SQL-LibraryManagement-System" target="_blank">
-          github.com/PranavIriventy/SQL-LibraryManagement-System
-        </a>
-      </li>
-    </ul>
+        <div class="item-block">
+          <div class="item-title">
+            Mobile Application Developer Intern • ISRO
+          </div>
+          <div class="item-subtitle">Internship</div>
+          <div class="item-meta">HTML • CSS • JavaScript • React.js</div>
+          <ul>
+            <li>Worked on UI development using HTML, CSS, JavaScript, and React.js for prototype mobile interfaces.</li>
+            <li>Designed responsive components and screens for internal project workflows.</li>
+            <li>Gained exposure to real-world government project development cycles and standards.</li>
+          </ul>
+          <span class="pill">Govt. Project Exposure</span>
+        </div>
+      </div>
+    </section>
 
-    <h3>Steel Waste Management System using Machine Learning</h3>
-    <ul>
-      <li>Developed a machine learning model using Linear Discriminant Analysis (LDA) to predict waste quantity and type in steel manufacturing.</li>
-      <li>Built and processed a dataset combining historical production data and real-time inputs to automate pre-waste estimation.</li>
-      <li>Helps industries take proactive waste management decisions and reduce dependency on slow annual waste-auditing methods.</li>
-    </ul>
-  </section>
+    <!-- PROJECTS -->
+    <section id="projects" class="section-card">
+      <div class="section-inner">
+        <h2 class="section-title">
+          <span class="accent-bar"></span> Projects
+        </h2>
 
-  <!-- ACHIEVEMENTS -->
-  <section id="achievements">
-    <h2>Achievements</h2>
-    <ul>
-      <li>Won 1st place at an IoT Expo for developing an RFID attendance system.</li>
-      <li>Secured 76/100 in NPTEL Cloud Computing Foundations exam.</li>
-    </ul>
-  </section>
+        <div class="project">
+          <div class="project-title">Student Performance – Data Analysis</div>
+          <div class="project-tech">
+            Python • Pandas • NumPy • Matplotlib • Seaborn • Machine Learning • Streamlit
+          </div>
+          <ul>
+            <li>Performed exploratory data analysis to identify key factors influencing student performance.</li>
+            <li>Built ML models including Linear Regression and Random Forest for performance prediction.</li>
+            <li>Developed an interactive Streamlit dashboard and deployed it online.</li>
+          </ul>
+          <div class="project-link">
+            <a href="https://github.com/PranavIriventy/Studentproject" target="_blank">
+              View on GitHub
+            </a>
+          </div>
+        </div>
 
-  <!-- RESUME -->
-  <section id="resume">
-    <h2>Resume</h2>
-    <p>Download my updated resume (PDF):</p>
-    <!-- Make sure resume.pdf is present in your project folder -->
-    <a href="resume.pdf" download class="button">Download Resume</a>
-  </section>
+        <div class="project">
+          <div class="project-title">SQL-Based Online Library Management System</div>
+          <div class="project-tech">MySQL • SQL Procedures • Triggers</div>
+          <ul>
+            <li>Designed and implemented a complete library database using MySQL.</li>
+            <li>Created stored procedures, triggers, and automated fine calculation logic for overdue books.</li>
+            <li>Implemented views and constraints to maintain data integrity and simplify queries.</li>
+          </ul>
+          <div class="project-link">
+            <a href="https://github.com/PranavIriventy/SQL-LibraryManagement-System" target="_blank">
+              View on GitHub
+            </a>
+          </div>
+        </div>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <h2>Contact</h2>
-    <p><strong>Phone:</strong> +91 9390556618</p>
-    <p><strong>Email:</strong> <a href="mailto:pranavmohit123@gmail.com">pranavmohit123@gmail.com</a></p>
-    <p><strong>LinkedIn:</strong>
-      <a href="https://www.linkedin.com/in/pranav-mohit-110471272/" target="_blank">
-        linkedin.com/in/pranav-mohit-110471272
-      </a>
-    </p>
-    <p><strong>GitHub:</strong>
-      <a href="https://github.com/PranavIriventy" target="_blank">
-        github.com/PranavIriventy
-      </a>
-    </p>
-  </section>
+        <div class="project">
+          <div class="project-title">Steel Waste Management System using Machine Learning</div>
+          <div class="project-tech">Python • LDA • Data Preprocessing</div>
+          <ul>
+            <li>Built a predictive ML model using Linear Discriminant Analysis (LDA) for industrial waste estimation.</li>
+            <li>Used production datasets to estimate waste before manufacturing begins, enabling proactive decision-making.</li>
+            <li>Reduced reliance on slow annual waste-audit processes by automating pre-waste estimation.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
+    <!-- ACHIEVEMENTS -->
+    <section id="achievements" class="section-card">
+      <div class="section-inner">
+        <h2 class="section-title">
+          <span class="accent-bar"></span> Achievements
+        </h2>
+        <ul class="achievements-list">
+          <li>1st Place – National IoT Expo for developing an emergency alert / RFID-based system.</li>
+          <li>Scored 76/100 in NPTEL Cloud Computing Foundations.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section-card">
+      <div class="section-inner">
+        <h2 class="section-title">
+          <span class="accent-bar"></span> Contact
+        </h2>
+        <div class="contact-grid">
+          <div>
+            <div class="contact-item">
+              <span class="contact-label">Phone:</span> +91 9390556618
+            </div>
+            <div class="contact-item">
+              <span class="contact-label">Email:</span>
+              <a href="mailto:pranavmohit123@gmail.com">pranavmohit123@gmail.com</a>
+            </div>
+            <div class="contact-item">
+              <span class="contact-label">LinkedIn:</span>
+              <a href="https://www.linkedin.com/in/pranav-mohit-110471272/" target="_blank">
+                linkedin.com/in/pranav-mohit-110471272
+              </a>
+            </div>
+            <div class="contact-item">
+              <span class="contact-label">GitHub:</span>
+              <a href="https://github.com/PranavIriventy" target="_blank">
+                github.com/PranavIriventy
+              </a>
+            </div>
+          </div>
+          <div>
+            <p style="font-size:0.9rem; color:var(--text-muted);">
+              Open to roles in software development, full stack engineering, data engineering,
+              and related entry-level opportunities. Feel free to reach out for internships,
+              full-time roles, or collaborations on interesting projects.
+            </p>
+            <a href="resume.pdf" download class="btn btn-primary">
+              Download Resume
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> PRANAV MOHIT IRIVENTY • Portfolio
+    </footer>
+  </main>
+
+  <script>
+    // Set current year in footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
